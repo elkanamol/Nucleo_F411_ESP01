@@ -11,5 +11,6 @@
 void ESP_Init (char *SSID, char *PASSWD);
 void ESP_Send_Data (char *APIkey, int Field_num, uint16_t value);
 void ESP_Send_Multi (char *APIkey, int numberoffileds, uint16_t value[]);
+void ESP_Send_Multi_Float (char *APIkey, int numberoffileds, float value[]);
 
 #endif /* INC_ESPDATALOGGER_H_ */

@@ -120,3 +120,38 @@ void ESP_Send_Multi (char *APIkey, int numberoffileds, uint16_t value[])
 	Ringbuf_init();
 
 }
+void ESP_Send_Multi_Float (char *APIkey, int numberoffileds, float value[])
+{
+	char local_buf[500] = {0};
+	char local_buf2[30] = {0};
+	char field_buf[200] = {0};
+
+
+	Uart_sendstring("AT+CIPSTART=\"TCP\",\"api.thingspeak.com\",80\r\n");
+	while (!(Wait_for("OK\r\n")));
+
+	sprintf (local_buf, "GET /update?api_key=%s", APIkey);
+	for (int i=0; i<numberoffileds; i++)
+	{
+		sprintf(field_buf, "&field%d=%.6f",i+1, value[i]);
+		strcat (local_buf, field_buf);
+	}
+
+	strcat(local_buf, "\r\n");
+	int len = strlen (local_buf);
+
+	sprintf (local_buf2, "AT+CIPSEND=%d\r\n", len);
+	Uart_sendstring(local_buf2);
+	while (!(Wait_for(">")));
+
+	Uart_sendstring (local_buf);
+	while (!(Wait_for("SEND OK\r\n")));
+
+	while (!(Wait_for("CLOSED")));
+
+	bufclr(local_buf);
+	bufclr(local_buf2);
+
+	Ringbuf_init();
+
+}

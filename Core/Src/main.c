@@ -116,10 +116,11 @@ int main(void)
 
   // Initialise luminosity sensor
 //  TSL2561_Init(&hi2c1);
-  uint16_t Value_Buf [4];
+//  uint16_t Value_Buf [4];
+  float Value_Buf [4];
 
-//  ESP_Init("OnePlus_8T", "E12345678_1");
-  ESP_Init("molson", "E123456m");
+  ESP_Init("OnePlus_8T", "E12345678_1");
+//  ESP_Init("molson", "E123456m");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -142,8 +143,8 @@ int main(void)
 	  Value_Buf[0] = Temperature;
 	  Value_Buf[1] = Pressure;
 	  Value_Buf[2] = Humidity;
-
-	  ESP_Send_Multi("7QR1WMIRHFUXG9NL", 3, Value_Buf);
+	  ESP_Send_Multi_Float ("7QR1WMIRHFUXG9NL", 3, Value_Buf);
+	  //ESP_Send_Multi("7QR1WMIRHFUXG9NL", 3, Value_Buf);
 
 	  HAL_Delay(15000); // must be at least 15 sec delay between 2 send
   }

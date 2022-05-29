@@ -10,7 +10,15 @@ the connection wireing is as below pic.
 ![image](https://user-images.githubusercontent.com/57934787/169669764-8c891780-7107-4335-a31c-a9ff719c0366.png)
 ![image](https://user-images.githubusercontent.com/57934787/169669790-45dd67ab-3707-4b72-8fec-2e17399b8eff.png)
 
+Need to add float option in linker on project settings with sprintf() function. 
+
+![image](https://user-images.githubusercontent.com/57934787/169691394-819e9ae9-e08a-4b19-bdc6-e1210e4ed898.png)
+
 
 the TingSpeak charts:
 ![image](https://user-images.githubusercontent.com/57934787/169669505-b4df76c5-06cf-491d-95a2-36f197e36873.png)
+
+On Logic Analayzer scope it seems like below:
+
+![image](https://user-images.githubusercontent.com/57934787/169691432-7db5ed55-56d0-4acb-91d2-bef70138cef8.png)
 

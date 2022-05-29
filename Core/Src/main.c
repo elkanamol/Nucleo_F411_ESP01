@@ -143,6 +143,10 @@ int main(void)
 	  Value_Buf[0] = Temperature;
 	  Value_Buf[1] = Pressure;
 	  Value_Buf[2] = Humidity;
+
+	  //Validate connection state
+	  if (!(ESP_Check_Connection()))
+		  ESP_Init("OnePlus_8T", "E12345678_1");
 	  ESP_Send_Multi_Float ("7QR1WMIRHFUXG9NL", 3, Value_Buf);
 	  //ESP_Send_Multi("7QR1WMIRHFUXG9NL", 3, Value_Buf);
 

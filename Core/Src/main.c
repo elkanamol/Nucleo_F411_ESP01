@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+<<<<<<< HEAD
 
 /* USER CODE END Includes */
 
@@ -105,6 +106,133 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+//#include "tsl2561.h"
+#include "BME280_STM32.h"
+
+#include "ESPDataLogger.h"
+
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c1;
+
+UART_HandleTypeDef huart1;
+UART_HandleTypeDef huart2;
+
+/* USER CODE BEGIN PV */
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_I2C1_Init(void);
+static void MX_USART1_UART_Init(void);
+static void MX_USART2_UART_Init(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+float Temperature, Pressure, Humidity;
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_I2C1_Init();
+  MX_USART1_UART_Init();
+  MX_USART2_UART_Init();
+  /* USER CODE BEGIN 2 */
+
+  BME280_Config(OSRS_2, OSRS_16, OSRS_1, MODE_NORMAL, T_SB_0p5, IIR_16);
+
+  char buffer[256];
+  sprintf(buffer, "Start\n");
+  HAL_UART_Transmit(&huart2, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
+  HAL_Delay(1000);
+
+//  uint16_t broadband, ir;
+//  uint32_t lux;
+
+  // Initialise luminosity sensor
+//  TSL2561_Init(&hi2c1);
+//  uint16_t Value_Buf [4];
+  float Value_Buf [4];
+
+  ESP_Init("OnePlus_8T", "E12345678_1");
+//  ESP_Init("molson", "E123456m");
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+//	  TSL2561_SetTiming(&hi2c1, TSL2561_INTEGRATIONTIME_101MS, TSL2561_GAIN_0X);
+
+//	  // Check luminosity level and calculate lux
+//	  TSL2561_GetLuminosity(&hi2c1, &broadband, &ir);
+//	  lux = TSL2561_CalculateLux(broadband, ir);
+//
+//	  int sz=sprintf(buffer, "broadband %u IR %u LUX %lu\r\n", broadband, ir, lux);
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)buffer, sz, HAL_MAX_DELAY);
+	  BME280_Measure();
+//Temperature, Pressure, Humidity
+	  Value_Buf[0] = Temperature;
+	  Value_Buf[1] = Pressure;
+	  Value_Buf[2] = Humidity;
+	  ESP_Send_Multi_Float ("7QR1WMIRHFUXG9NL", 3, Value_Buf);
+	  //ESP_Send_Multi("7QR1WMIRHFUXG9NL", 3, Value_Buf);
+
+	  HAL_Delay(15000); // must be at least 15 sec delay between 2 send
+//>>>>>>> refs/remotes/Nucleo_F411_ESP01.git/master
   }
   /* USER CODE END 3 */
 }

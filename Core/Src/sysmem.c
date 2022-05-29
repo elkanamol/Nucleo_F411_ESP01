@@ -10,7 +10,11 @@
  ******************************************************************************
  * @attention
  *
+<<<<<<< HEAD
  * Copyright (c) 2022 STMicroelectronics.
+=======
+ * Copyright (c) 2021 STMicroelectronics.
+>>>>>>> refs/remotes/Nucleo_F411_ESP01.git/master
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file

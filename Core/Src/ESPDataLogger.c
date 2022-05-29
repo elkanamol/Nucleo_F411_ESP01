@@ -155,3 +155,36 @@ void ESP_Send_Multi_Float (char *APIkey, int numberoffileds, float value[])
 	Ringbuf_init();
 
 }
+
+/************************************************************
+ * Check WIFI connection with basestation
+ * need to verify that the ESP are got "+CWJAP_CUR:" answer
+ * When the unit are not connected the ESP got "No AP"
+ * The standard answers is:
+ * for good connection:
+ * AT+CWJAP_CUR?
+ * +CWJAP_CUR:"OnePlus_8T","62:eb:a0:27:2e:53",1,-56
+ *
+ * OK
+ *
+ * for not connected:
+ *
+ * AT+CWJAP_CUR?
+ * No AP
+ *
+ * OK
+ *
+ * **********************************************************/
+
+
+uint16_t ESP_Check_Connection(void)
+{
+	Uart_sendstring("AT+CWJAP_CUR?\r\n");
+
+	if(!(Wait_for("+CWJAP_CUR:"))){
+		return 0;
+	}
+
+	Uart_flush();
+	return 1;
+}
